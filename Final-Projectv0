@@ -1,0 +1,228 @@
+var currentScene = 0;
+var questionNumber = 0;
+var startTime;
+var score = 0;
+//khan button
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    //this.align = config.textAlign;
+    this.onClick = config.onClick || function() {};
+};
+
+Button.prototype.draw = function() {
+    fill(227, 170, 0);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(18);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+10, this.y+this.height/4);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+
+var gameScene1 = function() {
+    currentScene =1;
+    background(173, 239, 255);
+    image(getImage("cute/Star"),148,-14);
+    fill(173, 239, 255);
+    rect(20,149,358,66);
+    fill(7, 14, 145);
+    textSize(25);
+    text("What is the rarest m&m color?",29, 170);
+    fill(173, 239, 255);
+    rect(4,231,184,45);// top right
+    rect(4,300,184,45);// bottom right
+    rect(210,300,184,45);//bottom left
+    rect(210,231,184,45);// top left
+    fill(7, 14, 145);
+    text("Yellow", 54,242); 
+    text("Brown",262,242);//right answer
+    text("Orange",262,309);
+    text("Red",71,309);
+    textSize(22);
+    text("Score: " + score, 294, 30);
+    text("Time:" + round((millis()-startTime)/1000),13,30);
+    
+}; //first question
+
+
+var gameScene2 = function() {
+    currentScene = 2;
+    background(173, 239, 255);
+    image(getImage("cute/Star"),148,-14);
+    fill(173, 239, 255);
+    rect(20,149,358,66);
+    fill(7, 14, 145);
+    textSize(18);
+    text("What is the common name for dried plums?",27, 170);
+    fill(173, 239, 255);
+    rect(4,231,184,45);// top right
+    rect(4,300,184,45);// bottom right
+    rect(210,300,184,45);//bottom left
+    rect(210,231,184,45);// top left
+    fill(7, 14, 145);
+    textSize(25);
+    text("Sun maid", 41,242);
+    text("Aroo",262,242); 
+    text("Raisins",262,309);
+    text("Prunes",57,309);//right answer
+    textSize(22);
+    text("Score: " + score, 294, 30);
+    text("Time:" + round((millis()-startTime)/1000),13,30);
+    
+}; // second question
+
+var gameScene3 = function() {
+    currentScene = 3;
+    background(173, 239, 255);
+    image(getImage("cute/Star"),148,-14);
+    fill(173, 239, 255);
+    rect(20,149,358,66);
+    fill(7, 14, 145);
+    textSize(22);
+    text("Which country consumes the most",25, 170);
+    text("chocolate per capita?",92, 197);
+    fill(173, 239, 255);
+    rect(4,231,184,45);// top right
+    rect(4,300,184,45);// bottom right
+    rect(210,300,184,45);//bottom left
+    rect(210,231,184,45);// top left
+    fill(7, 14, 145);
+    textSize(25);
+    text("Switzerland", 31,262); // right answer
+    text("Belgium",259,260);
+    text("France",264,331);
+    text("Morroco",50,331);
+    textSize(22);
+    text("Score: " + score, 294, 30);
+    text("Time:" + round((millis()-startTime)/1000),13,30);
+    
+}; //third question
+
+var startButton = new Button({
+    x: 124,
+    y: 300,
+    label: "Start!",
+    onClick: function() {
+        currentScene = 1;
+        gameScene1();
+        startTime = millis();
+    }
+}); // start button
+
+var splashScreen = function (){
+    background(87, 10, 21);
+    fill(255, 255, 255);
+    textSize(27);
+    text("Do You Want To be A Superstar",8,96);
+    textSize(20);
+    textSize(15);
+    text("Answer the questions correctly to earn stars or move on.",9,269);
+    image(getImage("cute/Star"),142,107);
+    startButton.draw();
+};// splash screen function
+
+var endScreen = function ()
+{
+    background(87, 10, 21);
+    image(getImage("cute/Star"),150,64,100,160);
+    fill(255, 255, 255);
+    textSize(20);
+    text ("Final Score = " + score,131,271);
+   
+};
+
+mouseClicked = function() {
+    
+startButton.handleMouseClick();
+
+
+};
+
+mousePressed = function() {
+    if (currentScene === 1 && mouseX > 4 && mouseX < 190 && mouseY > 231 && mouseY < 274)//top right
+    {
+        //score++;
+        
+    }
+     if (currentScene === 1 && mouseX > 4 && mouseX < 190 && mouseY > 300 && mouseY < 350 )//bottom right
+    {
+        //score++;
+        
+    }
+    if (currentScene === 1 && mouseX > 210 && mouseX < 380 && mouseY > 231 && mouseY < 280)// top left
+    {
+        score++;
+        currentScene =2;
+        
+    }
+    if (currentScene === 1 && mouseX > 210 && mouseX < 390 && mouseY > 300 && mouseY < 350 )//bottom left
+    {
+        //score++;
+        
+    }
+//question 2
+if (currentScene === 1 && mouseX > 4 && mouseX < 190 && mouseY > 231 && mouseY < 274)//top right
+    {
+        //score++;
+        
+    }
+     if (currentScene === 1 && mouseX > 4 && mouseX < 190 && mouseY > 300 && mouseY < 350 )//bottom right
+    {
+        score++;
+        currentScene = 3;
+        
+    }
+    if (currentScene === 1 && mouseX > 210 && mouseX < 380 && mouseY > 231 && mouseY < 280)// top left
+    {
+        score++;
+        
+    }
+    if (currentScene === 1 && mouseX > 210 && mouseX < 390 && mouseY > 300 && mouseY < 350 )//bottom left
+    {
+        //score++;
+        
+    }
+
+};
+
+
+draw = function() {
+    if (currentScene === 0)
+    {
+        splashScreen();
+    }
+    
+   else if (currentScene === 1)
+    {
+        gameScene1();
+    }
+    else if (currentScene === 2)
+    {
+        gameScene2();
+        
+    }
+    else if (currentScene === 3)
+    {
+        gameScene3();
+    }
+}; 
+
+
+
